@@ -22,6 +22,26 @@
 
 
     <script>
+// format string from https://stackoverflow.com/a/18234317/8069403
+    String.prototype.formatUnicorn = String.prototype.formatUnicorn ||
+    function () {
+        "use strict";
+        var str = this.toString();
+        if (arguments.length) {
+            var t = typeof arguments[0];
+            var key;
+            var args = ("string" === t || "number" === t) ?
+                Array.prototype.slice.call(arguments)
+                : arguments[0];
+
+            for (key in args) {
+                str = str.replace(new RegExp("\\{" + key + "\\}", "gi"), args[key]);
+            }
+        }
+
+    return str;
+};
+
     mapboxgl.accessToken = 'pk.eyJ1IjoieGR6ZTIiLCJhIjoiY2phc3N3czVsMDVoczMzbjByMDF2NWhmciJ9.XH1KQOO7DJLs3jKg4Xx3Zg';
 
     var map = new mapboxgl.Map({
@@ -46,7 +66,7 @@
         // Populate the popup and set its coordinates
         // based on the feature found.
         popup.setLngLat(e.features[0].geometry.coordinates)
-            .setHTML(e.features[0].properties.GENRE_BOTA)
+            .setHTML( build_html(e.features[0].properties) )
             .addTo(map);
     });
 
@@ -54,6 +74,15 @@
         map.getCanvas().style.cursor = '';
         popup.remove();
     });
+
+    function build_html( props ){
+        var template = '<b>{GENRE_BOTA} {ESPECE} {VARIETE}</b> <br /> \
+                        [{CODE_PARENT}] {CODE_PARENT_DESC} <br /> \
+                        {ANNEEDEPLANTATION} {STADEDEDEVELOPPEMENT} ';
+        console.log( props );
+        return template.formatUnicorn( props );
+    }
+
     </script>
 
 
