@@ -1,5 +1,5 @@
 <!DOCTYPE html>
- 
+
 <html>
 <head>
     <meta charset="UTF-8">
@@ -8,19 +8,22 @@
 <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.42.2/mapbox-gl.js'></script>
 <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.42.2/mapbox-gl.css' rel='stylesheet' />
 
+
+<style>
+    body { margin:0; padding:0; }
+    #map { position:absolute; top:5px; bottom:5px; left:5px; right:5px; }
+</style>
+
 </head>
 
 <body>
 
+    <div id='map'></div>
 
-<h1>hello</h1>
 
-    <div id='map' style='width: 900px; height: 600px;'></div>
-    
-    
     <script>
     mapboxgl.accessToken = 'pk.eyJ1IjoieGR6ZTIiLCJhIjoiY2phc3N3czVsMDVoczMzbjByMDF2NWhmciJ9.XH1KQOO7DJLs3jKg4Xx3Zg';
-    
+
     var map = new mapboxgl.Map({
         container: 'map',
         style: 'mapbox://styles/xdze2/cjatx95u7kk5k2smir5u7t7l9',
@@ -29,7 +32,7 @@
         zoom: 15,
         minZoom: 11
     });
-    
+
     // Create a popup, but don't add it to the map yet.
     var popup = new mapboxgl.Popup({
         closeButton: false,
@@ -54,6 +57,6 @@
     </script>
 
 
- 
+
 </body>
-</html> 
+</html>
