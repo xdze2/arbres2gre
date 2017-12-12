@@ -12,6 +12,15 @@
 <style>
     body { margin:0; padding:0; }
     #map { position:absolute; top:5px; bottom:5px; left:5px; right:5px; }
+
+    .arbre_tooltip h3 {
+        margin:0; padding: 0;
+    }
+    .arbre_tooltip .nomsci {
+        font-style: italic;
+        font-family: serif;
+        color: #6f6f60;
+    }
 </style>
 
 </head>
@@ -76,9 +85,12 @@
     });
 
     function build_html_for_tree( props ){
-        var template = '<b>{GENRE_BOTA} {ESPECE} {VARIETE}</b> <br /> \
-                        [{CODE_PARENT}] {CODE_PARENT_DESC} <br /> \
-                        {ANNEEDEPLANTATION} {STADEDEDEVELOPPEMENT} ';
+        var template = '<div class="arbre_tooltip"><h3>{NOMFR}</h3> \
+                        <span class="nomsci">{GENRE_BOTA} {ESPECE} {VARIETE}</span> <br /> \
+                        {STADEDEDEVELOPPEMENT}, planté en {ANNEEDEPLANTATION} <br /> \
+                        </div> ';
+                        // {SOUS_CATEGORIE_DESC} <br /> \
+                        // lieu: {CODE_PARENT_DESC} \
         console.log( props );
         return template.formatUnicorn( props );
     }
