@@ -1,17 +1,115 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!DOCTYPE html>
+
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<title>Directory listing for /</title>
+    <meta charset="UTF-8">
+    <title> carte </title>
+
+<script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.42.2/mapbox-gl.js'></script>
+<link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.42.2/mapbox-gl.css' rel='stylesheet' />
+
+
+<style>
+    body { margin:0; padding:0; }
+    #map { position:absolute; top:5px; bottom:5px; left:5px; right:5px; }
+</style>
+
 </head>
+
 <body>
-<h1>Directory listing for /</h1>
-<hr>
-<ul>
-<li><a href="basicstyle.html">basicstyle.html</a></li>
-<li><a href="map_leaflet.html">map_leaflet.html</a></li>
-<li><a href="satellite.html">satellite.html</a></li>
-</ul>
-<hr>
+
+    <div id='map'></div>
+
+
+    <script>
+// format string from https://stackoverflow.com/a/18234317/8069403
+    String.prototype.formatUnicorn = String.prototype.formatUnicorn ||
+    function () {
+        "use strict";
+        var str = this.toString();
+        if (arguments.length) {
+            var t = typeof arguments[0];
+            var key;
+            var args = ("string" === t || "number" === t) ?
+                Array.prototype.slice.call(arguments)
+                : arguments[0];
+
+            for (key in args) {
+                str = str.replace(new RegExp("\\{" + key + "\\}", "gi"), args[key]);
+            }
+        }
+
+    return str;
+};
+
+    mapboxgl.accessToken = 'pk.eyJ1IjoieGR6ZTIiLCJhIjoiY2phc3N3czVsMDVoczMzbjByMDF2NWhmciJ9.XH1KQOO7DJLs3jKg4Xx3Zg';
+
+    var map = new mapboxgl.Map({
+        container: 'map',
+        style: 'mapbox://styles/xdze2/cjb3dv0ds8rfb2slbgea33tw3',
+        /*style: 'mapbox://styles/mapbox/streets-v9',*/
+        center: [5.720490, 45.192246],
+        zoom: 15,
+        minZoom: 11
+    });
+
+    // Create a popup, but don't add it to the map yet.
+    var popup = new mapboxgl.Popup({
+        closeButton: false,
+        closeOnClick: false
+    });
+
+    map.on('mouseenter', 'arbrestot', function(e) {
+        // Change the cursor style as a UI indicator.
+        map.getCanvas().style.cursor = 'pointer';
+
+        // Populate the popup and set its coordinates
+        // based on the feature found.
+        popup.setLngLat(e.features[0].geometry.coordinates)
+            .setHTML( build_html_for_tree(e.features[0].properties) )
+            .addTo(map);
+    });
+
+    map.on('mouseleave', 'arbrestot', function() {
+        map.getCanvas().style.cursor = '';
+        popup.remove();
+    });
+
+    function build_html_for_tree( props ){
+        var template = '<b>{GENRE_BOTA} {ESPECE} {VARIETE}</b> <br /> \
+                        [{CODE_PARENT}] {CODE_PARENT_DESC} <br /> \
+                        {ANNEEDEPLANTATION} {STADEDEDEVELOPPEMENT} ';
+        console.log( props );
+        return template.formatUnicorn( props );
+    }
+
+    map.on('click', 'zoneparents', function(e) {
+        // Change the cursor style as a UI indicator.
+        map.getCanvas().style.cursor = 'pointer';
+
+        // Populate the popup and set its coordinates
+        // based on the feature found.
+        popup.setLngLat(e.lngLat)
+            .setHTML( build_html_for_zone(e.features[0].properties) )
+            .addTo(map);
+    });
+
+    map.on('mouseleave', 'zoneparents', function() {
+        map.getCanvas().style.cursor = '';
+        popup.remove();
+    });
+
+    function build_html_for_zone( props ){
+        var template = '<b>{CODE_PARENT_DESC}</b> [{CODE_PARENT}] <br /> \
+                        {numberoftrees} arbres <br /> \
+                        {genre} ';
+        console.log( props );
+        return template.formatUnicorn( props );
+    }
+
+    </script>
+
+
+
 </body>
 </html>
