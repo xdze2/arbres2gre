@@ -95,29 +95,7 @@
         return template.formatUnicorn( props );
     }
 
-    map.on('click', 'zoneparents', function(e) {
-        // Change the cursor style as a UI indicator.
-        map.getCanvas().style.cursor = 'pointer';
 
-        // Populate the popup and set its coordinates
-        // based on the feature found.
-        popup.setLngLat(e.lngLat)
-            .setHTML( build_html_for_zone(e.features[0].properties) )
-            .addTo(map);
-    });
-
-    map.on('mouseleave', 'zoneparents', function() {
-        map.getCanvas().style.cursor = '';
-        popup.remove();
-    });
-
-    function build_html_for_zone( props ){
-        var template = '<b>{CODE_PARENT_DESC}</b> [{CODE_PARENT}] <br /> \
-                        {numberoftrees} arbres <br /> \
-                        {genre} ';
-        console.log( props );
-        return template.formatUnicorn( props );
-    }
 
     </script>
 
