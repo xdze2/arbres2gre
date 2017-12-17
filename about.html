@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title> arbres de Gre </title>
+
+</head>
+
+<style>
+    body {
+        margin: 3em;
+        margin-top: 1.5em;
+        line-height: 1.5;
+    }
+    h1 {
+        margin-bottom: 0;
+        padding-bottom: 0;
+        margin-top: 1.6em;
+    }
+    h1 + p {
+        margin-top: .1em;
+        margin-bottom: 1.5em;
+        font-size: 0.9em;
+    }
+    p, ul {
+        max-width: 30em;
+    }
+    a {
+        text-decoration: none;
+        font-weight: bold;
+        font-size: 95%;
+        color: #1b85b8;
+    }
+    a:hover {
+        color:#559e83;
+    }
+    ul {
+
+    }
+    a.retour  {
+        font-family: sans-serif;
+        font-size: .8em;
+        position: absolute;
+        top:6px;
+        left:10px;
+        color: #559e83;
+    }
+    a.retour:hover {
+        color: #1b85b8;
+    }
+    .chiffre {
+        font-weight: bold;
+        font-family: monospace;
+        font-size: 1.2em;
+    }
+
+</style>
+<body>
+    <a href="index.html" class="retour"> retour carte </a>
+<h1> Les arbres de Grenoble </h1>
+
+<p>
+Visualisation des arbres de la ville de Grenoble.
+</p>
+
+
+<p>
+La liste des arbres est fournies par
+l'initiative <a href="http://data.metropolegrenoble.fr/ckan/dataset/les-arbres-de-grenoble">Open Data Grenoble-Alpes-Metropole</a>.
+</p>
+<p>
+Les informations de la carte sont issues de <a href="https://www.openstreetmap.org">OpenStreetMap</a>.
+Le style de la carte est édité avec <a href="https://www.mapbox.com/mapbox-studio/" >MapBox Studio</a>.
+Les tuiles de la carte, comme les données des arbres, sont hébergées par <a href="https://www.mapbox.com">MapBox</a>.
+
+<p>
+Un <a href="https://github.com/xdze2/arbresdegrenoble">ensemble de scripts Python</a> permettent
+de pre-traiter les données :
+
+<ul>
+<li>Les correspondances entre les
+noms scientifiques (genre, espèce, variété) et les noms vernaculaires français sont
+issues du site web
+<a href="http://www.lesarbres.fr/noms-des-arbres-latin-.html">lesarbres.fr</a>. </li>
+
+<li> Les formes englobantes des arbres -affichées pour les faibles niveaux de zoom- sont
+    calculées avec un algorithme de alpha-hull.
+</li>
+
+</ul>
+</p>
+
+<h2>Statistiques</h2>
+<ul>
+    <li> Il y a <span class="chiffre">30&#x202F;913 arbres</span> enregistrés dans la base de données,
+        dont <span class="chiffre">5&#x202F;174</span> érables, <span class="chiffre">4&#x202F;609</span>  platanes,
+            <span class="chiffre">2&#x202F;119</span> pins noirs,
+        <span class="chiffre">1&#x202F;762</span> tilleuls  et <span class="chiffre">1&#x202F;448</span> frênes . </li>
+    <li> Les arbres les plus anciens enregistrés dans
+        la base datent de <span class="chiffre">1950</span>. Ce sont des platanes. </li>
+    <li> <span class="chiffre">523 arbres</span> sont, en moyenne, plantés par année. </li>
+
+</ul>
+
+
+</body>
