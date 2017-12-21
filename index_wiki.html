@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title> arbres de Gre </title>
+
+<!-- mapbox -->
+<script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.42.2/mapbox-gl.js'></script>
+<link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.42.2/mapbox-gl.css' rel='stylesheet' />
+
+<!-- vue js -->
+<script src="https://cdn.jsdelivr.net/npm/vue"></script>
+
+<!-- Axios  - html request -->
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fetch/2.0.3/fetch.js"></script>
+
+<!-- css -->
+
+<link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+
+    <div id="lieninfo">
+        <a href='about.html'>à propos</a>
+    </div>
+
+<div id="app">
+    <div id="map">
+    </div>
+
+    <div id="wikidata" ref="wd">
+        {{message}}
+    </div>
+
+</div>
+
+    <script src="wikidata.js"></script>
+
+    <script>
+// format string from https://stackoverflow.com/a/18234317/8069403
+    String.prototype.formatUnicorn = String.prototype.formatUnicorn ||
+    function () {
+        "use strict";
+        var str = this.toString();
+        if (arguments.length) {
+            var t = typeof arguments[0];
+            var key;
+            var args = ("string" === t || "number" === t) ?
+                Array.prototype.slice.call(arguments)
+                : arguments[0];
+
+            for (key in args) {
+                str = str.replace(new RegExp("\\{" + key + "\\}", "gi"), args[key]);
+            }
+        }
+
+    return str;
+};
+
+    mapboxgl.accessToken = 'pk.eyJ1IjoieGR6ZTIiLCJhIjoiY2phc3N3czVsMDVoczMzbjByMDF2NWhmciJ9.XH1KQOO7DJLs3jKg4Xx3Zg';
+
+    var map = new mapboxgl.Map({
+        container: 'map',
+        style: 'mapbox://styles/xdze2/cjb3dv0ds8rfb2slbgea33tw3',
+        /*style: 'mapbox://styles/mapbox/streets-v9',*/
+        center: [ 5.72121, 45.18145],
+        zoom: 15,
+        minZoom: 11,
+        attributionControl: false
+    }).addControl(new mapboxgl.AttributionControl({
+        compact: true
+    }));
+
+
+    // Create a popup, but don't add it to the map yet.
+    var popup = new mapboxgl.Popup({
+        closeButton: false,
+        closeOnClick: false
+    });
+
+    map.on('mouseenter', 'arbrestot', function(e) {
+        // Change the cursor style as a UI indicator.
+        map.getCanvas().style.cursor = 'pointer';
+
+        // Populate the popup and set its coordinates
+        // based on the feature found.
+        popup.setLngLat(e.features[0].geometry.coordinates)
+            .setHTML( build_html_for_tree(e.features[0].properties) )
+            .addTo(map);
+    });
+
+    map.on('mouseleave', 'arbrestot', function() {
+        map.getCanvas().style.cursor = '';
+        popup.remove();
+    });
+
+    function build_html_for_tree( props ){
+        var template = '<div class="arbre_tooltip"><h3>{NOMFR}</h3> \
+                        <span class="nomsci">{GENRE_BOTA} {ESPECE} {VARIETE}</span> <br /> \
+                        {STADEDEDEVELOPPEMENT}, planté en {ANNEEDEPLANTATION} <br /> \
+                        </div> ';
+                        // {SOUS_CATEGORIE_DESC} <br /> \
+                        // lieu: {CODE_PARENT_DESC} \
+        return template.formatUnicorn( props );
+    }
+
+    map.on('click', 'arbrestot', function(e) {
+        // Show wikipedia info
+
+        var props = e.features[0].properties;
+        var sci_name = props.GENRE_BOTA +' '+ props.ESPECE +' '+ props.VARIETE
+        app.showinfo(sci_name);
+    });
+
+    </script>
+
+
+
+</body>
+</html>

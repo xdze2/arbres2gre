@@ -1,0 +1,50 @@
+body { margin:0; padding:0; }
+#map { position:absolute;
+       top:5px; bottom:5px; left:5px; right:300px;
+       z-index: 20;
+    }
+
+#wikidata {
+    width:290px;
+    position:absolute;
+    top:5px; bottom:5px; right:5px;
+    border: 1px solid black;
+    padding: 6px;
+    box-sizing: border-box;
+}
+
+.arbre_tooltip h3 {
+    margin:0; padding: 0;
+}
+.arbre_tooltip .nomsci {
+    font-style: italic;
+    font-family: serif;
+    color: #6f6f60;
+}
+
+#lieninfo {
+    box-sizing: border-box;
+
+    position: absolute;
+    top: 6px;
+    right: 6px;
+    z-index: 99;
+
+    font-size: 12px;
+    font-family: sans-serif;
+    /*font-weight: bold;*/
+}
+#lieninfo a {
+    text-decoration: none;
+    color: black;
+
+    padding: 3px;
+    padding-left: 6px;
+    padding-right: 6px;
+
+    background:rgba(255, 255, 255, 0.65);
+}
+#lieninfo a:hover {
+    color: #1AA8BF;
+    background:rgba(255, 255, 255, 0.9);
+}
