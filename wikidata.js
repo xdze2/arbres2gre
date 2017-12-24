@@ -8,6 +8,7 @@ var app = new Vue({
   },
   methods: {
     askinfo: function ( sciname ) {
+        /* first method called when click on 'arbre' node */
         this.message = sciname;
         console.log('show ' + sciname);
 
@@ -15,12 +16,14 @@ var app = new Vue({
 
     },
     showinfo: function( response ){
+        /* method called  */
         this.data = response.data;
     },
     searchquery: function ( texttosearch ) {
         var _this = this;
-        axios.get('https://fr.wikipedia.org/w/api.php?origin=*', {
+        axios.get('https://fr.wikipedia.org/w/api.php', {
             params:{
+                origin:'*',
                 action:'opensearch',
                 search: texttosearch,
                 namespace: "0",
@@ -29,43 +32,12 @@ var app = new Vue({
         }).then(function (response) {
             // console.log(response);
             _this.showinfo( response );
-          })
-          .catch(function (error) {
-              console.log('request error');
+        })
+        .catch(function (error) {
+            console.log('request error');
             console.log(error);
-          });
-
-        // var data = {
-        //     action:'opensearch',
-        //     search: texttosearch,
-        //     format: 'json',
-        //     limit: 5
-        //     };
-        // var url = 'https://fr.wikipedia.org/w/api.php?origin=*';
-        // fetch(url, {
-        //   method: "POST",
-        //   // body: JSON.stringify(data),
-        //   body: 'action=opensearch&search=Eisntein',
-        //   headers: {
-        //     "Content-Type": "application/json",
-        // },
-        //  mode: 'cors'
-        // }).then(function(response) {
-        //   // response.status     //=> number 100–599
-        //   // response.statusText //=> String
-        //   // response.headers    //=> Headers
-        //   // response.url        //=> String
-        //   console.log(response);
-        //
-        //
-        //   return response.text()
-        //
-        // }, function(error) {
-        //     console.log('error');
-        //   error.message
-        //   console.log(error);
-        // })
-
+        });
     }
+
  }
 })
