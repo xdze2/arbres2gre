@@ -34,6 +34,8 @@
 
     <div id="wikidata" ref="wd">
         {{message}}
+
+        {{data}}
     </div>
 
 </div>
@@ -113,7 +115,7 @@
 
         var props = e.features[0].properties;
         var sci_name = props.GENRE_BOTA +' '+ props.ESPECE +' '+ props.VARIETE
-        app.showinfo(sci_name);
+        app.askinfo(sci_name);
     });
 
     </script>
