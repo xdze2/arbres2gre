@@ -4,7 +4,8 @@ var app = new Vue({
   el: '#app',
   data: {
     message: 'Hello Vue!',
-    data:''
+    datainfo:'',
+    abstract:''
   },
   methods: {
     askinfo: function ( sciname ) {
@@ -16,8 +17,17 @@ var app = new Vue({
 
     },
     showinfo: function( response ){
-        /* method called  */
-        this.data = response.data;
+
+        /* method called ..  */
+        var data = JSON.parse( response.request.response );
+        console.log(data);
+        this.datainfo = data.query.pages;
+
+        var pageinfo =  data.query.pages;
+        pageinfo = pageinfo[ pageinfo.keys()[0] ];
+
+        this.abstract = pageinfo['extract'];
+        // this.abstract = 'hello';
     },
     searchquery: function ( texttosearch ) {
         var _this = this;
@@ -26,15 +36,38 @@ var app = new Vue({
                 origin:'*',
                 action:'opensearch',
                 search: texttosearch,
-                namespace: "0",
                 format: 'json',
                 limit: 5}
         }).then(function (response) {
             // console.log(response);
+            // _this.showinfo( response );
+            _this.pagequery( response.data[1][0] );
+        })
+        .catch(function (error) {
+            console.log('search request error');
+            console.log(error);
+        });
+    },
+    pagequery: function ( title ) {
+        var _this = this;
+        axios.get('https://fr.wikipedia.org/w/api.php', {
+            params:{
+                origin:'*',
+                action:'query',
+                titles: title.replace(' ', '_'),
+                format: 'json',
+                prop:'info|extracts|pageimages',
+                //exchars:500,
+                //exsectionformat:'plain',
+                //explaintext:'true'
+                }
+        }).then(function (response) {
+            // console.log(response);
+            console.log('get response');
             _this.showinfo( response );
         })
         .catch(function (error) {
-            console.log('request error');
+            console.log('page request error');
             console.log(error);
         });
     }
